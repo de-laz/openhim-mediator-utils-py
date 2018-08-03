@@ -1,6 +1,7 @@
 import requests
 import json
 import hashlib
+import urllib3
 
 from datetime import datetime
 
@@ -10,6 +11,11 @@ class Auth:
         self.salt = ''
 
     def authenticate(self):
+        if self.options['verify'] == False:
+            urllib3.disable_warnings(
+                urllib3.exceptions.InsecureRequestWarning
+            )
+
         result = requests.get(
             f"{self.options['apiURL']}/authenticate/{self.options['username']}",
             verify=self.options['verify']
@@ -34,7 +40,7 @@ class Auth:
         password_hash = shasum.hexdigest()
 
         shasum = hashlib.sha512()
-        now = datetime.now().replace(microsecond=0).isoformat(' ')
+        now = str(datetime.utcnow())
         shasum.update(f"{password_hash + self.salt + now}".encode('utf-8'))
         token = shasum.hexdigest()
         
