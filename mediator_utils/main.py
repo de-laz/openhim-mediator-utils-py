@@ -5,8 +5,15 @@ from .heartbeat import Heartbeat
 class Main:
     def __init__(self, **kwargs):
         self.auth = Auth(kwargs['options'])
-        self.mediator_registration = MediatorRegistration(**kwargs)
-        self.heartbeat = Heartbeat(self.auth, **kwargs)
+        self.mediator_registration = MediatorRegistration(
+            auth=self.auth,
+            conf=kwargs['conf'],
+            options={
+                'mediators_url': f"{kwargs['options']['apiURL']}/mediators",
+                'verify_cert': kwargs['options']['verify_cert']
+            }
+        )
+        self.heartbeat = Heartbeat(self.auth, force_config=False, **kwargs)
 
     def authenticate(self):
         return self.auth.authenticate()
@@ -25,3 +32,4 @@ class Main:
     
     def fetch_config(self):
         return self.heartbeat.fetch_config()
+

@@ -11,18 +11,18 @@ class Auth:
         self.salt = ''
 
     def authenticate(self):
-        if self.options['verify'] == False:
+        if self.options['verify_cert'] == False:
             urllib3.disable_warnings(
                 urllib3.exceptions.InsecureRequestWarning
             )
 
         result = requests.get(
             f"{self.options['apiURL']}/authenticate/{self.options['username']}",
-            verify=self.options['verify']
+            verify=self.options['verify_cert']
         )
 
         if result.status_code != 200:
-            raise Exception(f"User {self.options} not found when authenticating with core API")
+            raise Exception(f"User {self.options['username']} not found when authenticating with core API")
         
         body = result.json()
         self.salt = body['salt']

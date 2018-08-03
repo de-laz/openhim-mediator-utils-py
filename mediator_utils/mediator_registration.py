@@ -5,7 +5,6 @@ class MediatorRegistration:
     def __init__(self, **kwargs):
         self.options = kwargs['options']
         self.conf = kwargs['conf']
-        self.options = kwargs['options']
         self.auth = kwargs['auth']
     
     def run(self):
