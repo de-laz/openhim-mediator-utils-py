@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="openhim_mediator_utils",
-    version="0.0.1",
+    version="0.0.2",
     author="Lazola Sifuba",
     author_email="sifubalazola@gmail.com",
     description="A utility library for build openHIM mediators",
