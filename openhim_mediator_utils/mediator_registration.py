@@ -1,6 +1,7 @@
 import requests
 import urllib3
 
+
 class MediatorRegistration:
     def __init__(self, **kwargs):
         self.options = kwargs['options']
@@ -27,6 +28,6 @@ class MediatorRegistration:
         
         if resp.status_code != 201:
             raise Exception(
-                f"Recieved a non-201 response code, the response code was: {resp.status_code}"
+                f"Received a non-201 response code, the response code was: {resp.status_code}"
             )
 

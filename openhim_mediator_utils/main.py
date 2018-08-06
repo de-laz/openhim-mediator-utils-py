@@ -2,6 +2,7 @@ from .auth import Auth
 from .mediator_registration import MediatorRegistration
 from .heartbeat import Heartbeat
 
+
 class Main:
     def __init__(self, **kwargs):
         self.auth = Auth(kwargs['options'])
