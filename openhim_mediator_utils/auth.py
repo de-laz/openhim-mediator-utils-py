@@ -1,8 +1,7 @@
 import requests
 import hashlib
 import urllib3
-
-from datetime import datetime
+import datetime
 
 
 class Auth:
@@ -39,7 +38,7 @@ class Auth:
         password_hash = sha.hexdigest()
 
         sha = hashlib.sha512()
-        now = str(datetime.utcnow())
+        now = str(datetime.datetime.utcnow())
         sha.update(f"{password_hash + self.salt + now}".encode('utf-8'))
         token = sha.hexdigest()
 
