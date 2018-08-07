@@ -16,12 +16,17 @@ class Auth:
             )
 
         result = requests.get(
-            f"{self.options['apiURL']}/authenticate/{self.options['username']}",
+            "{}/authenticate/{}".format(
+                self.options['apiURL'],
+                self.options['username']
+            ),
             verify=self.options['verify_cert']
         )
 
         if result.status_code != 200:
-            raise Exception(f"User {self.options['username']} not found when authenticating with core API")
+            raise Exception(
+                "User {} not found when authenticating with core API".format(self.options['username'])
+            )
 
         body = result.json()
         self.salt = body['salt']
@@ -30,16 +35,18 @@ class Auth:
     def gen_auth_headers(self):
         if not self.salt:
             raise Exception(
-                f"{self.options['username']} has not been authenticated. Please use the .authenticate() function first"
+                "{} has not been authenticated. Please use the .authenticate() function first".format(
+                    self.options['username']
+                )
             )
 
         sha = hashlib.sha512()
-        sha.update(f"{self.salt + self.options['password']}".encode('utf-8'))
+        sha.update((self.salt + self.options['password']).encode('utf-8'))
         password_hash = sha.hexdigest()
 
         sha = hashlib.sha512()
         now = str(datetime.datetime.utcnow())
-        sha.update(f"{password_hash + self.salt + now}".encode('utf-8'))
+        sha.update((password_hash + self.salt + now).encode('utf-8'))
         token = sha.hexdigest()
 
         return {

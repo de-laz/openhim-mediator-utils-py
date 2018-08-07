@@ -10,7 +10,7 @@ class Main:
             auth=self.auth,
             conf=kwargs['conf'],
             options={
-                'mediators_url': f"{kwargs['options']['apiURL']}/mediators",
+                'mediators_url': "{}/mediators".format(kwargs['options']['apiURL']),
                 'verify_cert': kwargs['options']['verify_cert'],
                 'force_config': kwargs['options']['force_config']
             }

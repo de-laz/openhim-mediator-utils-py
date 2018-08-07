@@ -23,7 +23,7 @@ class Heartbeat:
                 urllib3.exceptions.InsecureRequestWarning
             )
 
-        mediators_url = f"{self.options['apiURL']}/mediators/{self.conf['urn']}/heartbeat"
+        mediators_url = "{}/mediators/{}/heartbeat".format(self.options['apiURL'], self.conf['urn'])
         response = requests.post(
             url=mediators_url,
             verify=self.options['verify_cert'],
@@ -33,7 +33,7 @@ class Heartbeat:
 
         if response.status_code is not 200:
             raise Exception(
-                f"Heartbeat unsuccessful, received status code of {response.status_code}"
+                "Heartbeat unsuccessful, received status code of {}".format(response.status_code)
             )
 
     def activate(self):
