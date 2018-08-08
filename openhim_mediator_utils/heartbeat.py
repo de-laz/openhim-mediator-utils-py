@@ -2,14 +2,13 @@ import requests
 import urllib3
 
 from uptime import uptime
-from apscheduler.schedulers.background import BackgroundScheduler
 
 
 class Heartbeat:
     def __init__(self, auth, **kwargs):
         self.auth = auth
         self.options = kwargs['options']
-        self.__scheduler = BackgroundScheduler()
+        self.__scheduler = kwargs['scheduler']
         self.__job = None
         self.conf = kwargs['conf']
 
@@ -38,7 +37,7 @@ class Heartbeat:
 
     def activate(self):
         self.auth.authenticate()
-        if not self.__job:
+        if self.__job is None:
             self.__job = self.__scheduler.add_job(
                 self._send,
                 'interval',
