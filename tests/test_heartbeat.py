@@ -88,7 +88,7 @@ class FetchConfig(unittest.TestCase):
         self.heartbeat.fetch_config()
         
         # assert
-        self.auth.authenticate.assert_called
+        self.assertTrue(self.auth.authenticate.called)
 
     def test_send_heartbeat_with_force_config_true(self):
         # arrange
