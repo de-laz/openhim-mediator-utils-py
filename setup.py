@@ -19,5 +19,11 @@ setuptools.setup(
         "Operating System :: OS Independent",
         "Natural Language :: English",
         "Intended Audience :: Developers"
-    )
+    ),
+    install_requires=[
+        'APScheduler',
+        'requests',
+        'uptime',
+        'urllib3'
+    ]
 )
