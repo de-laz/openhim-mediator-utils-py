@@ -28,6 +28,6 @@ class MediatorRegistration:
         
         if resp.status_code != 201:
             raise Exception(
-                f"Received a non-201 response code, the response code was: {resp.status_code}"
+                "Received a non-201 response code, the response code was: {}".format(resp.status_code)
             )
 

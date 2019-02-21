@@ -2,6 +2,8 @@ from .auth import Auth
 from .mediator_registration import MediatorRegistration
 from .heartbeat import Heartbeat
 
+from apscheduler.schedulers.background import BackgroundScheduler
+
 
 class Main:
     def __init__(self, **kwargs):
@@ -10,12 +12,17 @@ class Main:
             auth=self.auth,
             conf=kwargs['conf'],
             options={
-                'mediators_url': f"{kwargs['options']['apiURL']}/mediators",
+                'mediators_url': "{}/mediators".format(kwargs['options']['apiURL']),
                 'verify_cert': kwargs['options']['verify_cert'],
                 'force_config': kwargs['options']['force_config']
             }
         )
-        self.heartbeat = Heartbeat(self.auth, options=kwargs['options'], conf=kwargs['conf'])
+        self.heartbeat = Heartbeat(
+            self.auth,
+            options=kwargs['options'],
+            conf=kwargs['conf'],
+            scheduler=BackgroundScheduler()
+        )
 
     def authenticate(self):
         return self.auth.authenticate()

@@ -27,7 +27,7 @@ class Authenticate(unittest.TestCase):
         self.auth.authenticate()
         
         # assert
-        assert mock_disable_warnings.called
+        self.assertTrue(mock_disable_warnings.called)
     
     @mock.patch('urllib3.disable_warnings')
     @mock.patch('requests.get')
@@ -44,7 +44,7 @@ class Authenticate(unittest.TestCase):
         self.auth.authenticate()
 
         # assert
-        assert not mock_disable_warnings.called
+        self.assertFalse(mock_disable_warnings.called)
 
     @mock.patch('requests.get')
     def test_raises_exception_when_response_code_is_not_200(self, mock_get):
@@ -123,3 +123,7 @@ class GenAuthHeaders(unittest.TestCase):
         mock_sha512.hexdigest.return_value = token
         mock_sha512.update.return_value = None
         return mock_sha512
+
+
+if __name__ == '__main__':
+    unittest.main()
